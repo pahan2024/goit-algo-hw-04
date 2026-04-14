@@ -13,7 +13,7 @@
 
 1. **Клонуйте репозиторій:**
    ```bash
-   git clone https://github.com
+   git clone https://github.com/pahan2024/goit-algo-hw-04
 2.Підготуйте дані:
 У папці з проектом знайдіть файл salary_file.txt (або запустіть програму, щоб вона його створила). Додайте дані у форматі:
 text
