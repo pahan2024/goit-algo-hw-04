@@ -4,7 +4,7 @@ def total_salary(path):
         developers_count = 0
         processed_names = set()  # Множина для відстеження унікальних імен
         
-        # Відкриваємо файл із використанням менеджера контексту та кодування UTF-8
+        
         with open(path, 'r', encoding='utf-8') as file:
             for line in file:
                 line = line.strip()
@@ -47,12 +47,12 @@ def total_salary(path):
         return None
 
 # --- Блок запуску програми ---
-# Вкажіть назву вашого файлу (він має бути в тій же папці, що і цей скрипт)
+# Вкажіть назву вашого файлу .txt (він має бути в тій же папці, що і скрипт)
 path_to_salary_file = "salary_file.txt"
 
 result = total_salary(path_to_salary_file)
 
 if result:
     total, average = result
-    # Використовуємо формат :g, щоб прибрати зайві нулі після коми
-    print(f"Загальна сума зарплат: {total}, Середня зарплата: {average:g}")
+    # Використовую формат :g, щоб прибрати зайві нулі після коми в середньому значенні, та .2f для загальної суми
+    print(f"Загальна сума зарплат: {total:.2f}, Середня зарплата: {average:g}")
