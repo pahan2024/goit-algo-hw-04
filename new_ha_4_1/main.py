@@ -2,46 +2,57 @@ def total_salary(path):
     try:
         total_sum = 0
         developers_count = 0
-
-        # Використовуємо менеджер контексту with та вказуємо кодування utf-8
-        with open(path, "r", encoding="utf-8") as file:
+        processed_names = set()  # Множина для відстеження унікальних імен
+        
+        # Відкриваємо файл із використанням менеджера контексту та кодування UTF-8
+        with open(path, 'r', encoding='utf-8') as file:
             for line in file:
-                # Видаляємо пробіли та символи переносу рядка
                 line = line.strip()
-
-                # Пропускаємо порожні рядки, щоб не виникало помилок
-                if not line:
+                if not line:  # Пропускаємо порожні рядки
                     continue
-
+                
                 try:
-                    # Розділяємо дані за комою
-                    name, salary = line.split(",")
+                    # Розділяємо дані на ім'я та зарплату
+                    name, salary = line.split(',')
+                    name = name.strip()
+                    
+                    # Перевірка на дублікати імен
+                    if name in processed_names:
+                        print(f"Попередження: Розробник '{name}' із сумою {salary} вже є у списку. "
+                              f"Рядок проігноровано. Будь ласка, перевірте файл salary_file.txt")
+                        continue
+                    
                     total_sum += float(salary)
                     developers_count += 1
+                    processed_names.add(name)  # Додаємо ім'я до списку оброблених
+                    
                 except ValueError:
+                    # Обробка випадку, якщо дані в рядку некоректні
                     print(f"Помилка формату у рядку: '{line}'. Пропускаємо.")
-
-        # Перевірка на випадок порожнього файлу (щоб не було ділення на нуль)
+        
+        # Перевірка, щоб уникнути ділення на нуль, якщо файл порожній
         if developers_count == 0:
             return (0, 0)
-
+        
         average_salary = total_sum / developers_count
-
-        # Повертаємо кортеж із двох чисел
         return (total_sum, average_salary)
 
     except FileNotFoundError:
+        # Обробка випадку, якщо файл не знайдено за вказаним шляхом
         print(f"Помилка: Файл за шляхом '{path}' не знайдено.")
         return None
     except Exception as e:
+        # Обробка будь-яких інших непередбачуваних помилок
         print(f"Виникла непередбачувана помилка: {e}")
         return None
 
-
+# --- Блок запуску програми ---
+# Вкажіть назву вашого файлу (він має бути в тій же папці, що і цей скрипт)
 path_to_salary_file = "salary_file.txt"
 
 result = total_salary(path_to_salary_file)
 
 if result:
     total, average = result
-    print(f"Загальна сума зарплат: {total}, Середня зарплата: {average}")
+    # Використовуємо формат :g, щоб прибрати зайві нулі після коми
+    print(f"Загальна сума зарплат: {total}, Середня зарплата: {average:g}")
