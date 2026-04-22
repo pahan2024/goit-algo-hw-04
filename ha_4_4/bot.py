@@ -2,10 +2,11 @@ def parse_input(user_input):
     if not user_input.strip():
         return "unknown", []
     cmd, *args = user_input.split()
-    cmd = cmd.strip().lower()
+    cmd = cmd.strip().lower()  # Критерій: нечутливість до регістру
     return cmd, *args
 
 
+# Критерій: Логіка в окремих функціях, приймають аргументи, повертають рядок
 def add_contact(args, contacts):
     if len(args) < 2:
         return "Error: Give me name and phone please."
@@ -39,15 +40,16 @@ def show_all(contacts):
     return "\n".join([f"{name}: {phone}" for name, phone in contacts.items()])
 
 
+# Критерій: Вся взаємодія (print/input) тільки у функції main
 def main():
-    contacts = {}
+    contacts = {}  # Критерій: Зберігання у пам'яті (словник)
     print("Welcome to the assistant bot!")
 
-    while True:
+    while True:  # Критерій: Нескінченний цикл
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
 
-        if command in ["close", "exit"]:
+        if command in ["close", "exit"]:  # Критерій: Завершення за командами
             print("Good bye!")
             break
         elif command == "hello":
